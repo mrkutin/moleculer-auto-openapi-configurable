@@ -1,7 +1,7 @@
 {
-  "name": "moleculer-auto-openapi-configurable",
-  "version": "1.1.7",
-  "description": "Auto generate openapi(swagger) scheme for moleculer with route exclusion support",
+  "name": "moleculer-auto-openapi",
+  "version": "1.2.0",
+  "description": "Auto generate openapi(swagger) scheme for molecular",
   "main": "index.js",
   "typings": "index.d.ts",
   "scripts": {
