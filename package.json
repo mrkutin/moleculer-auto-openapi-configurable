@@ -1,5 +1,5 @@
 {
-  "name": "moleculer-auto-openapi",
+  "name": "moleculer-auto-openapi-configurable",
   "version": "1.2.0",
   "description": "Auto generate openapi(swagger) scheme for molecular",
   "main": "index.js",
