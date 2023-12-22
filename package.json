@@ -1,7 +1,7 @@
 {
-  "name": "moleculer-auto-openapi",
-  "version": "1.1.6",
-  "description": "Auto generate openapi(swagger) scheme for molecular",
+  "name": "moleculer-auto-openapi-configurable",
+  "version": "1.1.7",
+  "description": "Auto generate openapi(swagger) scheme for moleculer with route exclusion support",
   "main": "index.js",
   "typings": "index.d.ts",
   "scripts": {
@@ -9,19 +9,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/grinat/moleculer-auto-openapi.git"
+    "url": "git+https://github.com/mrkutin/moleculer-auto-openapi-configurable.git"
   },
   "keywords": [
     "openapi",
     "swagger",
     "moleculer"
   ],
-  "author": "Gabdrashitov Rinat <paladin2012gnu@gmail.com>",
+  "author": "Gabdrashitov Rinat <paladin2012gnu@gmail.com>. Forked by Mr. Kutin",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/grinat/moleculer-auto-openapi/issues"
+    "url": "https://github.com/mrkutin/moleculer-auto-openapi-configurable/issues"
   },
-  "homepage": "https://github.com/grinat/moleculer-auto-openapi#readme",
+  "homepage": "https://github.com/mrkutin/moleculer-auto-openapi-configurable#readme",
   "jest": {
     "testEnvironment": "node",
     "testTimeout": 60000
