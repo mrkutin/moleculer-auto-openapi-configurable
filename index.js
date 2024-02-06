@@ -60,29 +60,29 @@ module.exports = {
       "components": {
         "schemas": {
           // Standart moleculer schemas
-          "DbMixinList": {
-            "type": "object",
-            "properties": {
-              "rows": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                },
-              },
-              "totalCount": {
-                "type": "number",
-              },
-            },
-          },
-          "DbMixinFindList": {
-            "type": "array",
-            "items": {
-              "type": "object",
-            },
-          },
-          "Item": {
-            "type": "object",
-          },
+          // "DbMixinList": {
+          //   "type": "object",
+          //   "properties": {
+          //     "rows": {
+          //       "type": "array",
+          //       "items": {
+          //         "type": "object",
+          //       },
+          //     },
+          //     "totalCount": {
+          //       "type": "number",
+          //     },
+          //   },
+          // },
+          // "DbMixinFindList": {
+          //   "type": "array",
+          //   "items": {
+          //     "type": "object",
+          //   },
+          // },
+          // "Item": {
+          //   "type": "object",
+          // },
         },
         "securitySchemes": {},
         "responses": {
@@ -132,15 +132,15 @@ module.exports = {
               "application/json": {
                 "schema": {
                   "oneOf": [
-                    {
-                      "$ref": "#/components/schemas/DbMixinList",
-                    },
-                    {
-                      "$ref": "#/components/schemas/DbMixinFindList",
-                    },
-                    {
-                      "$ref": "#/components/schemas/Item",
-                    },
+                    // {
+                    //   "$ref": "#/components/schemas/DbMixinList",
+                    // },
+                    // {
+                    //   "$ref": "#/components/schemas/DbMixinFindList",
+                    // },
+                    // {
+                    //   "$ref": "#/components/schemas/Item",
+                    // },
                   ],
                 },
               },
@@ -379,9 +379,6 @@ module.exports = {
 
           // iterate each route
           for (const route of node.settings.routes) {
-            if (this.settings.excludeRoutes.some(excludeRoute => route.path.includes(excludeRoute))) {
-              continue
-            }
             // map standart aliases
             this.buildActionRouteStructFromAliases(route, routes);
           }
@@ -396,12 +393,6 @@ module.exports = {
             }
             const autoAliases = await this.fetchAliasesForService(service);
             const convertedRoute = this.convertAutoAliasesToRoute(autoAliases);
-            convertedRoute.aliases = Object.keys(convertedRoute.aliases)
-              .filter(key => !this.settings.excludeRoutes.some(excludeRoute => key.includes(excludeRoute)))
-              .reduce((acc, key) => {
-                acc[key] = convertedRoute.aliases[key]
-                return acc
-              }, {})
             this.buildActionRouteStructFromAliases(convertedRoute, routes);
           }
         }
@@ -487,7 +478,9 @@ module.exports = {
       for (const action in routes) {
         const { paths, params, actionType, openapi = {} } = routes[action];
         const service = action.split(".").slice(0, -1).join(".");
-
+        if (action.includes('openapi')) {
+          continue
+        }
         this.addTagToDoc(doc, service);
 
         for (const path of paths) {
@@ -529,12 +522,12 @@ module.exports = {
             );
           } else {
             const schemaName = action;
-            this.createSchemaFromParams(doc, schemaName, params, addedQueryParams);
+            //this.createSchemaFromParams(doc, schemaName, params, addedQueryParams);
             doc.paths[openapiPath][method].requestBody = {
               "content": {
                 "application/json": {
                   "schema": {
-                    "$ref": `#/components/schemas/${schemaName}`,
+                    //"$ref": `#/components/schemas/${schemaName}`,
                   },
                 },
               },
@@ -543,6 +536,7 @@ module.exports = {
 
           if (this.settings.requestBodyAndResponseBodyAreSameOnMethods.includes(method)) {
             doc.paths[openapiPath][method].responses[200] = {
+              "description": this.settings.requestBodyAndResponseBodyAreSameDescription,
               "description": this.settings.requestBodyAndResponseBodyAreSameDescription,
               ...doc.paths[openapiPath][method].requestBody,
             };
